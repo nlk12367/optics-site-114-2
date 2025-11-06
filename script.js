@@ -3553,7 +3553,7 @@ const chapterData = {
                 <h2 class="section-title"><center>作者序</center></h2>
                 <article class="preface-content">
                     <p>
-                    大家好~ 我是本網站的作者 顏靖衡。<br><br>
+                    大家好~ 我是本網站的作者_Seirou。<br><br>
                     在這個網站中，我整理了 大二上《光學二》的練習題，目的是為了幫助同學們更好地理解課本內容，並提供一個方便的學習資源。<br><br>
                     我希望這些解答能夠對大家有所幫助，無論是在課堂學習還是自我複習上。如果你有任何問題或建議，歡迎隨時與我聯繫。祝大家學習順利，事事順心！
                     </p>
@@ -3564,7 +3564,7 @@ const chapterData = {
 
                     </p>
                     
-                    <p class="signature">—— 作者 <span class="author-name"> 顏靖衡 </span></p>
+                    <p class="signature">—— 作者 <span class="author-name"> Seirou </span></p>
                 </article>
             </section>
         `,
