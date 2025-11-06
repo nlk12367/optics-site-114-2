@@ -3581,7 +3581,7 @@ const chapterData = {
     }
 }
 
-};
+}
 
 /* --- 
   SPA 核心邏輯 (保持不變)
@@ -3673,5 +3673,6 @@ function initializeAppLogic() {
     }
 
 }
+
 
 
