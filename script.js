@@ -3576,55 +3576,104 @@ const chapterData = {
             setTimeout(() => {
                 section.style.transition = 'opacity 1.2s ease';
                 section.style.opacity = 1;
-            }, 300);
+                }, 300);
+            }
         }
     }
+
 }
 
+// 修正 #3：在這裡補上 initFlashcards 函式 (您可以先用空函式佔位)
+/**
+ * 初始化指定章節的字卡遊戲
+ * @param {string} chapterId - 章節 ID (例如 '1', '2')
+ * @param {Array<Object>} cards - 字卡資料陣列
+ */
+function initFlashcards(chapterId, cards) {
+    console.log(`initFlashcards for ${chapterId} called.`);
+    
+    // 這裡應該要有您字卡遊戲的完整邏輯
+    // (例如：綁定按鈕、點擊翻面等等)
+    // 如果您還沒寫好，先放空著，至少不會報錯
+    
+    // 範例：(您可能需要類似的程式碼)
+    /*
+    let currentCardIndex = 0;
+    const front = document.getElementById(`flashcard-front-${chapterId}`);
+    const back = document.getElementById(`flashcard-back-${chapterId}`);
+    const cardInner = document.getElementById(`flashcard-${chapterId}`).querySelector('.flashcard-inner');
+
+    function updateCard() {
+        if (front && back) {
+            front.innerHTML = cards[currentCardIndex].front;
+            back.innerHTML = cards[currentCardIndex].back;
+            // 重新觸發 MathJax 渲染字卡上的公式
+            if (window.MathJax && window.MathJax.typesetPromise) {
+                window.MathJax.typesetPromise([front, back]);
+            }
+        }
+    }
+
+    if (cardInner) {
+        cardInner.addEventListener('click', () => {
+            cardInner.classList.toggle('is-flipped');
+        });
+    }
+
+    const nextBtn = document.getElementById(`next-card-${chapterId}`);
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            currentCardIndex = (currentCardIndex + 1) % cards.length;
+            updateCard();
+            if (cardInner.classList.contains('is-flipped')) {
+                cardInner.classList.remove('is-flipped');
+            }
+        });
+    }
+
+    const prevBtn = document.getElementById(`prev-card-${chapterId}`);
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            currentCardIndex = (currentCardIndex - 1 + cards.length) % cards.length;
+            updateCard();
+            if (cardInner.classList.contains('is-flipped')) {
+                cardInner.classList.remove('is-flipped');
+            }
+        });
+    }
+    
+    // 初始載入第一張卡
+    updateCard();
+    */
 }
 
 /* --- 
-  SPA 核心邏輯 (保持不變)
+  SPA 核心邏輯
 --- */
-
-// 檢查 MathJax 是否載入完成的函式
 function initializeAppLogic() {
     const contentArea = document.getElementById('content-area');
 
-    // 導覽列點擊事件 (*** 已更新 ***)
+    // 導覽列點擊事件 (*** 您的原始碼，不需修改 ***)
     function setupNavigation() {
-        // 選取所有連結 (包含頂層與下拉選單中的)
         const allLinks = document.querySelectorAll('#main-nav a');
-        // 只選取頂層連結 (用於清除 active 狀態)
         const topLevelLinks = document.querySelectorAll('#main-nav > ul > li > a');
 
         allLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 const chapterId = link.dataset.chapter;
                 
-                // *** 關鍵修正 1：只處理帶有 data-chapter 屬性的連結 ***
-                // (這樣點擊 "附錄 ▼" 按鈕時就不會觸發載入)
                 if (chapterId) {
-                    e.preventDefault(); // 防止頁面跳轉
+                    e.preventDefault(); 
                     
                     if (chapterData[chapterId]) {
                         renderChapter(chapterId);
                         
-                        // --- 更新 'active' 狀態的邏輯 ---
-                        
-                        // 1. 移除所有頂層連結的 active
                         topLevelLinks.forEach(l => l.classList.remove('active'));
-                        
-                        // 2. 移除所有下拉選單中連結的 active
                         document.querySelectorAll('.dropdown-content a').forEach(l => l.classList.remove('active'));
-                        
-                        // 3. 將 'active' 加到被點擊的連結
                         link.classList.add('active');
                         
-                        // 4. *** 關鍵修正 2：如果點擊的是下拉選單中的連結，也將 'active' 加到其父層 ***
                         const dropdownParent = link.closest('.dropdown');
                         if (dropdownParent) {
-                            // 根據您的 index.html，父層按鈕的 class 是 'dropbtn'
                             const parentToggle = dropdownParent.querySelector('.dropbtn');
                             if(parentToggle) {
                                 parentToggle.classList.add('active');
@@ -3635,28 +3684,19 @@ function initializeAppLogic() {
                         contentArea.innerHTML = `<h1 class="chapter-title">章節 ${chapterId} 尚未建立</h1><p>請稍候...</p>`;
                     }
                 }
-                // 如果連結沒有 data-chapter (例如 "附錄 ▼" 按鈕)，則不執行任何動作
             });
         });
     }
 
-// 渲染章節內容的函式 (*** 已修正 ***)
+    // 渲染章節內容的函式 (*** 您的原始碼，不需修改 ***)
     function renderChapter(chapterId) {
-        // --- 這是您缺失的程式碼 ---
-        // 1. 根據 ID 從 chapterData 取得資料
         const data = chapterData[chapterId];
-        
-        // 2. 將 HTML 內容注入到頁面
         contentArea.innerHTML = data.html;
-        // --- 程式碼結束 ---
 
-        // 3. 如果有附加邏輯 (如測驗)，就執行它
         if (data.initLogic) {
             data.initLogic();
         }
 
-        // 4. 告訴 MathJax 重新渲染新載入的公式
-        // (*** 增加一個檢查，確保 MathJax 存在 ***)
         if (window.MathJax && window.MathJax.typesetPromise) {
             window.MathJax.typesetPromise([contentArea])
                 .catch((err) => console.log('MathJax typeset error:', err));
@@ -3666,13 +3706,13 @@ function initializeAppLogic() {
     // --- 啟動 APP ---
     setupNavigation();
     
-    // 預設載入第一章 (*** 修正：選取第一個 *有* data-chapter 的連結 ***)
     const firstChapterLink = document.querySelector('#main-nav a[data-chapter]');
     if (firstChapterLink) {
         firstChapterLink.click();
     }
+} // <--- initializeAppLogic() 函式在這裡結束
 
-}
+// 修正 #1：刪除了這裡多餘的 '}'
 
-
-
+// 修正 #2：在最外面呼叫啟動函式
+initializeAppLogic();
