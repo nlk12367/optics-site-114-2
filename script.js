@@ -3640,16 +3640,27 @@ function initializeAppLogic() {
         });
     }
 
-    // 渲染章節內容的函式 (保持不變)
+// 渲染章節內容的函式 (*** 已修正 ***)
     function renderChapter(chapterId) {
-// ... existing code ...
+        // --- 這是您缺失的程式碼 ---
+        // 1. 根據 ID 從 chapterData 取得資料
+        const data = chapterData[chapterId];
+        
+        // 2. 將 HTML 內容注入到頁面
+        contentArea.innerHTML = data.html;
+        // --- 程式碼結束 ---
+
+        // 3. 如果有附加邏輯 (如測驗)，就執行它
         if (data.initLogic) {
             data.initLogic();
         }
 
-        // 3. 告訴 MathJax 重新渲染新載入的公式
-        window.MathJax.typesetPromise([contentArea])
-            .catch((err) => console.log('MathJax typeset error:', err));
+        // 4. 告訴 MathJax 重新渲染新載入的公式
+        // (*** 增加一個檢查，確保 MathJax 存在 ***)
+        if (window.MathJax && window.MathJax.typesetPromise) {
+            window.MathJax.typesetPromise([contentArea])
+                .catch((err) => console.log('MathJax typeset error:', err));
+        }
     }
 
     // --- 啟動 APP ---
