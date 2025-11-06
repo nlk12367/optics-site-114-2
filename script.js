@@ -3559,7 +3559,7 @@ const chapterData = {
                     </p>
                     <p>
                     聯絡資訊：<br>
-                        Discord： Seirou #radix405225<br>
+                        Discord ： Seirou #radix405225<br>
                         Youtube 頻道： TATA的音樂頻道<br>
 
                     </p>
@@ -3660,7 +3660,7 @@ function initializeAppLogic() {
     if (firstChapterLink) {
         firstChapterLink.click();
     }
+
 }
 
-// 通用的字卡邏輯函式 (保持不變)
-function
+
