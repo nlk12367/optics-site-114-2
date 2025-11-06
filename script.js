@@ -3553,7 +3553,7 @@ const chapterData = {
                 <h2 class="section-title"><center>作者序</center></h2>
                 <article class="preface-content">
                     <p>
-                    大家好~ 我是本網站的作者顏靖衡。<br><br>
+                    大家好~ 我是本網站的作者 顏靖衡。<br><br>
                     在這個網站中，我整理了 大二上《光學二》的練習題，目的是為了幫助同學們更好地理解課本內容，並提供一個方便的學習資源。<br><br>
                     我希望這些解答能夠對大家有所幫助，無論是在課堂學習還是自我複習上。如果你有任何問題或建議，歡迎隨時與我聯繫。祝大家學習順利，事事順心！
                     </p>
@@ -3569,150 +3569,121 @@ const chapterData = {
             </section>
         `,
     initLogic: () => {
-        // 作者序通常不需要額外邏輯，但可在此加上淡入動畫或互動效果
-        const section = document.querySelector('.author-preface');
-        if (section) {
-            section.style.opacity = 0;
-            setTimeout(() => {
-                section.style.transition = 'opacity 1.2s ease';
-                section.style.opacity = 1;
-                }, 300);
-            }
         }
     }
-
 }
-
-// 修正 #3：在這裡補上 initFlashcards 函式 (您可以先用空函式佔位)
-/**
- * 初始化指定章節的字卡遊戲
- * @param {string} chapterId - 章節 ID (例如 '1', '2')
- * @param {Array<Object>} cards - 字卡資料陣列
- */
-function initFlashcards(chapterId, cards) {
-    console.log(`initFlashcards for ${chapterId} called.`);
-    
-    // 這裡應該要有您字卡遊戲的完整邏輯
-    // (例如：綁定按鈕、點擊翻面等等)
-    // 如果您還沒寫好，先放空著，至少不會報錯
-    
-    // 範例：(您可能需要類似的程式碼)
-    /*
-    let currentCardIndex = 0;
-    const front = document.getElementById(`flashcard-front-${chapterId}`);
-    const back = document.getElementById(`flashcard-back-${chapterId}`);
-    const cardInner = document.getElementById(`flashcard-${chapterId}`).querySelector('.flashcard-inner');
-
-    function updateCard() {
-        if (front && back) {
-            front.innerHTML = cards[currentCardIndex].front;
-            back.innerHTML = cards[currentCardIndex].back;
-            // 重新觸發 MathJax 渲染字卡上的公式
-            if (window.MathJax && window.MathJax.typesetPromise) {
-                window.MathJax.typesetPromise([front, back]);
-            }
-        }
-    }
-
-    if (cardInner) {
-        cardInner.addEventListener('click', () => {
-            cardInner.classList.toggle('is-flipped');
-        });
-    }
-
-    const nextBtn = document.getElementById(`next-card-${chapterId}`);
-    if (nextBtn) {
-        nextBtn.addEventListener('click', () => {
-            currentCardIndex = (currentCardIndex + 1) % cards.length;
-            updateCard();
-            if (cardInner.classList.contains('is-flipped')) {
-                cardInner.classList.remove('is-flipped');
-            }
-        });
-    }
-
-    const prevBtn = document.getElementById(`prev-card-${chapterId}`);
-    if (prevBtn) {
-        prevBtn.addEventListener('click', () => {
-            currentCardIndex = (currentCardIndex - 1 + cards.length) % cards.length;
-            updateCard();
-            if (cardInner.classList.contains('is-flipped')) {
-                cardInner.classList.remove('is-flipped');
-            }
-        });
-    }
-    
-    // 初始載入第一張卡
-    updateCard();
-    */
-}
-
 /* --- 
-  SPA 核心邏輯
+  SPA 核心邏輯 (保持不變)
 --- */
+
+// 檢查 MathJax 是否載入完成的函式
+function checkMathJaxReady() {
+    if (window.MathJax && window.MathJax.typesetPromise) {
+        console.log("MathJax is ready. Initializing app...");
+        initializeAppLogic();
+    } else {
+        console.log("Waiting for MathJax...");
+        setTimeout(checkMathJaxReady, 100);
+    }
+}
+
+// 應用程式的進入點
 function initializeAppLogic() {
     const contentArea = document.getElementById('content-area');
+    const navLinks = document.querySelectorAll('#main-nav a');
 
-    // 導覽列點擊事件 (*** 您的原始碼，不需修改 ***)
+    // 導覽列點擊事件
     function setupNavigation() {
-        const allLinks = document.querySelectorAll('#main-nav a');
-        const topLevelLinks = document.querySelectorAll('#main-nav > ul > li > a');
-
-        allLinks.forEach(link => {
+        navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
+                e.preventDefault(); // 防止頁面跳轉
                 const chapterId = link.dataset.chapter;
                 
-                if (chapterId) {
-                    e.preventDefault(); 
+                // 檢查章節是否存在
+                if (chapterData[chapterId]) {
+                    renderChapter(chapterId);
                     
-                    if (chapterData[chapterId]) {
-                        renderChapter(chapterId);
-                        
-                        topLevelLinks.forEach(l => l.classList.remove('active'));
-                        document.querySelectorAll('.dropdown-content a').forEach(l => l.classList.remove('active'));
-                        link.classList.add('active');
-                        
-                        const dropdownParent = link.closest('.dropdown');
-                        if (dropdownParent) {
-                            const parentToggle = dropdownParent.querySelector('.dropbtn');
-                            if(parentToggle) {
-                                parentToggle.classList.add('active');
-                            }
-                        }
-
-                    } else {
-                        contentArea.innerHTML = `<h1 class="chapter-title">章節 ${chapterId} 尚未建立</h1><p>請稍候...</p>`;
-                    }
+                    // 更新導覽列的 'active' 狀態
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                } else {
+                    contentArea.innerHTML = `<h1 class="chapter-title">章節 ${chapterId} 尚未建立</h1><p>請稍候...</p>`;
                 }
             });
         });
     }
 
-    // 渲染章節內容的函式 (*** 您的原始碼，不需修改 ***)
+    // 渲染章節內容的函式
     function renderChapter(chapterId) {
         const data = chapterData[chapterId];
+        if (!data) return;
+
+        // 1. 將 HTML 內容注入到頁面
         contentArea.innerHTML = data.html;
 
+        // 2. 呼叫該章節特定的 JS 邏輯 (例如綁定測驗按鈕)
         if (data.initLogic) {
             data.initLogic();
         }
 
-        if (window.MathJax && window.MathJax.typesetPromise) {
-            window.MathJax.typesetPromise([contentArea])
-                .catch((err) => console.log('MathJax typeset error:', err));
-        }
+        // 3. 告訴 MathJax 重新渲染新載入的公式
+        window.MathJax.typesetPromise([contentArea])
+            .catch((err) => console.log('MathJax typeset error:', err));
     }
 
     // --- 啟動 APP ---
     setupNavigation();
     
-    const firstChapterLink = document.querySelector('#main-nav a[data-chapter]');
-    if (firstChapterLink) {
-        firstChapterLink.click();
+    // 預設載入第一章
+    navLinks[0].click();
+}
+
+// 通用的字卡邏輯函式
+function initFlashcards(chapterId, flashcards) {
+    let currentCardIndex = 0;
+    const flashcard = document.getElementById(`flashcard-${chapterId}`);
+    const cardFront = document.getElementById(`flashcard-front-${chapterId}`);
+    const cardBack = document.getElementById(`flashcard-back-${chapterId}`);
+    const prevButton = document.getElementById(`prev-card-${chapterId}`);
+    const nextButton = document.getElementById(`next-card-${chapterId}`);
+
+    function updateCard(index) {
+        if (!flashcard || !cardFront || !cardBack) return;
+        flashcard.classList.remove('is-flipped');
+        
+        setTimeout(() => {
+            cardFront.innerHTML = `<p>${flashcards[index].front}</p>`;
+            cardBack.innerHTML = `<p>${flashcards[index].back}</p>`;
+            // 告訴 MathJax 重新渲染 "字卡"
+            window.MathJax.typesetPromise([cardFront, cardBack]);
+        }, 200); 
     }
-} // <--- initializeAppLogic() 函式在這裡結束
 
-// 修正 #1：刪除了這裡多餘的 '}'
+    if (flashcard) {
+        flashcard.addEventListener('click', () => {
+            flashcard.classList.toggle('is-flipped');
+        });
+    }
 
-// 修正 #2：在最外面呼叫啟動函式
-initializeAppLogic();
+    if (nextButton) {
+        nextButton.addEventListener('click', (e) => {
+            e.stopPropagation(); 
+            currentCardIndex = (currentCardIndex + 1) % flashcards.length;
+            updateCard(currentCardIndex);
+        });
+    }
+
+    if (prevButton) {
+        prevButton.addEventListener('click', (e) => {
+            e.stopPropagation(); 
+            currentCardIndex = (currentCardIndex - 1 + flashcards.length) % flashcards.length;
+            updateCard(currentCardIndex);
+        });
+    }
+    
+    // 初始載入第一張卡片
+    updateCard(0);
+}
+
+// --- 啟動檢查 ---
+checkMathJaxReady()
