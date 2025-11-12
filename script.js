@@ -561,10 +561,11 @@ const chapterData = {
                 </ul>
             </section>
         `,
-        initLogic: () => { }
+        initLogic: () => { 
+
+        }
     },
-    "appendix-birefringence": {
-        "appendix-birefringence": {
+     "appendix-birefringence": {
             html: `
                 <h1 class="chapter-title">附錄：8.4 雙折射 (Birefringence)</h1>
                 <section class="learning-module">
@@ -653,7 +654,9 @@ const chapterData = {
                 <img src="https://hackmd.io/_uploads/B1EDzOVJ-g.png" alt="Nicol Prism">
             </section>
         `,
-        initLogic: () => { }
+        initLogic: () => {
+
+         }
     },
     "appendix-scattering": {
         html: `
@@ -791,8 +794,11 @@ const chapterData = {
                 </ul>
             </section>
         `,
-        initLogic: () => { }
+        initLogic: () => { 
+
+        }
     },
+
     "appendix-reflection": {
         html: `
             <h1 class="chapter-title">附錄：8.6 反射產生的偏振</h1>
@@ -871,8 +877,11 @@ const chapterData = {
                 <img src="https://hackmd.io/_uploads/S1rqXYEyWg.png" alt="Reflection vs Angle">
             </section>
         `,
-        initLogic: () => { }
+        initLogic: () => {
+
+         }
     },
+
     "appendix-retarders": {
         html: `
             <h1 class="chapter-title">附錄：8.7 延遲片 (Retarders)</h1>
@@ -1035,7 +1044,9 @@ const chapterData = {
                 <img src="https://hackmd.io/_uploads/Syezwc4yWl.png" alt="Circular Polarizer">
             </section>
         `,
-        initLogic: () => { }
+        initLogic: () => {
+
+         }
     },
     "appendix-circular": {
         html: `
@@ -1114,7 +1125,9 @@ const chapterData = {
                 <p><strong>應用範例:</strong> 石英晶體、糖溶液（檢測糖含量）、樟腦油、酒石酸的等分離及生物化學應用。</p>
             </section>
         `,
-        initLogic: () => { }
+        initLogic: () => {
+
+         }
     },
     "appendix-math": {
         html: `
@@ -1249,7 +1262,9 @@ const chapterData = {
                 </ul>
             </section>
         `,
-        initLogic: () => { }
+        initLogic: () => { 
+
+        }
     }
     
     /* * *** ↑↑ 貼上到這裡為止 (請確保 "problems" 物件在您的 JS 檔案中保持不變) ↑↑ *** */
@@ -1616,9 +1631,10 @@ const chapterData = {
             </section>
         `,
     initLogic: () => {
+
                 }
             }
-        }
+        
     }
 /* --- 
   SPA 核心邏輯 (保持不變)
