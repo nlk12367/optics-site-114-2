@@ -500,7 +500,6 @@ const chapterData = {
             initFlashcards('5', flashcards);
         }
     },
-    
     // --- (*** 新增 ***) 附錄的 HTML 內容與邏輯 ---
     "appendix-dichroism": {
         html: `
@@ -566,9 +565,9 @@ const chapterData = {
     },
     "appendix-birefringence": {
         "appendix-birefringence": {
-        html: `
-            <h1 class="chapter-title">附錄：8.4 雙折射 (Birefringence)</h1>
-            <section class="learning-module">
+            html: `
+                <h1 class="chapter-title">附錄：8.4 雙折射 (Birefringence)</h1>
+                <section class="learning-module">
                 <h2>什麼是雙折射？</h2>
                 <p>一般而言，當單色光從空氣或玻璃(各向同性介質)的界面折射時，只會產生一束折射光，這束光遵守斯涅爾(Snell)折射定律。然而，當單色光在各向異性晶體(如方解石 CaCO<sub>3</sub>)的界面折射時，通常會產生兩束折射光。這種現象被稱為雙折射。</p>
                 <p>當我們將一塊透明的方解石（Calcite）晶體放在一行文字上時，會觀察到一個奇特的現象：文字會呈現出兩個清晰的影像。這個被稱為<strong>雙折射</strong>(birefringence)現象...它揭示了當一束自然光入射到這類晶體時，光線會分裂成兩束獨立的折射光線。</p>
@@ -579,7 +578,7 @@ const chapterData = {
                 <img src="https://hackmd.io/_uploads/SJZC_u2Cex.jpg" alt="Isotropic vs Anisotropic">
                 <img src="https://hackmd.io/_uploads/S1vCP9nRxe.jpg" alt="Wave propagation 1">
                 <img src="https://hackmd.io/_uploads/ry9WetiAxg.png" alt="Wave propagation 2">
-            </section>
+             </section>
             
             <section class="learning-module">
                 <h2>晶體的光軸 (Optical Axis)</h2>
@@ -1623,8 +1622,8 @@ const chapterData = {
 /* --- 
   SPA 核心邏輯 (保持不變)
 --- */
+,
 }
-// 檢查 MathJax 是否載入完成的函式
 function checkMathJaxReady() {
     if (window.MathJax && window.MathJax.typesetPromise) {
         console.log("MathJax is ready. Initializing app...");
