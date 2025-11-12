@@ -1616,9 +1616,10 @@ const chapterData = {
             </section>
         `,
     initLogic: () => {
+                }
+            }
         }
     }
-}
 /* --- 
   SPA 核心邏輯 (保持不變)
 --*/
