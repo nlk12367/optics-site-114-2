@@ -1616,14 +1616,13 @@ const chapterData = {
             </section>
         `,
     initLogic: () => {
+                }
+            }
         }
     }
-}
 /* --- 
   SPA 核心邏輯 (保持不變)
---- */
-,
-}
+--*/
 function checkMathJaxReady() {
     if (window.MathJax && window.MathJax.typesetPromise) {
         console.log("MathJax is ready. Initializing app...");
